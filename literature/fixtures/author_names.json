@@ -1,0 +1,702 @@
+[
+{
+  "model": "literature.author",
+  "pk": 1,
+  "fields": {
+    "name": "Astrid Lindgren"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 2,
+  "fields": {
+    "name": "William Shakespeare"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 3,
+  "fields": {
+    "name": "Johann Wolfgang von Goethe"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 4,
+  "fields": {
+    "name": "Jane Austen"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 5,
+  "fields": {
+    "name": "J. R. R. Tolkien"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 6,
+  "fields": {
+    "name": "Franz Kafka"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 7,
+  "fields": {
+    "name": "Charles Dickens"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 8,
+  "fields": {
+    "name": "Erich K\u00e4stner"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 9,
+  "fields": {
+    "name": "Hermann Hesse"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 10,
+  "fields": {
+    "name": "Friedrich von Schiller"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 11,
+  "fields": {
+    "name": "Oscar Wilde"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 12,
+  "fields": {
+    "name": "Edgar Allan Poe"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 13,
+  "fields": {
+    "name": "Mark Twain"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 14,
+  "fields": {
+    "name": "Thomas Mann"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 15,
+  "fields": {
+    "name": "Fjodor M. Dostojewski"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 16,
+  "fields": {
+    "name": "Leo N. Tolstoi"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 17,
+  "fields": {
+    "name": "Friedrich D\u00fcrrenmatt"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 18,
+  "fields": {
+    "name": "Joanne K. Rowling"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 19,
+  "fields": {
+    "name": "Bertolt Brecht"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 20,
+  "fields": {
+    "name": "George Orwell"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 21,
+  "fields": {
+    "name": "Emily Bront\u00eb"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 22,
+  "fields": {
+    "name": "Michael Ende"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 23,
+  "fields": {
+    "name": "Heinrich Heine"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 24,
+  "fields": {
+    "name": "Enid Blyton"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 25,
+  "fields": {
+    "name": "Ernest Hemingway"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 26,
+  "fields": {
+    "name": "Karl May"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 27,
+  "fields": {
+    "name": "Jean-Paul Sartre"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 28,
+  "fields": {
+    "name": "Theodor Fontane"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 29,
+  "fields": {
+    "name": "Arthur Conan Doyle"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 30,
+  "fields": {
+    "name": "Albert Camus"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 31,
+  "fields": {
+    "name": "Max Frisch"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 32,
+  "fields": {
+    "name": "Charlotte Bronte"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 33,
+  "fields": {
+    "name": "Heinrich B\u00f6ll"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 34,
+  "fields": {
+    "name": "Lewis Carroll"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 35,
+  "fields": {
+    "name": "Eftos"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 36,
+  "fields": {
+    "name": "Kurt Tucholsky"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 37,
+  "fields": {
+    "name": "Virginia Woolf"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 38,
+  "fields": {
+    "name": "Victor Hugo"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 39,
+  "fields": {
+    "name": "Homer"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 40,
+  "fields": {
+    "name": "Friedrich Schiller"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 41,
+  "fields": {
+    "name": "Stephen King"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 42,
+  "fields": {
+    "name": "Gotthold Ephraim Lessing"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 43,
+  "fields": {
+    "name": "Rainer Maria Rilke"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 44,
+  "fields": {
+    "name": "Alexandre Dumas"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 45,
+  "fields": {
+    "name": "J. D. Salinger"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 46,
+  "fields": {
+    "name": "Robert Louis Stevenson"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 47,
+  "fields": {
+    "name": "Marcel Proust"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 48,
+  "fields": {
+    "name": "John Irving"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 49,
+  "fields": {
+    "name": "Theodor Storm"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 50,
+  "fields": {
+    "name": "Simone de Beauvoir"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 51,
+  "fields": {
+    "name": "Hans Christian Andersen"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 52,
+  "fields": {
+    "name": "Anton Tschechow"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 53,
+  "fields": {
+    "name": "James Joyce"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 54,
+  "fields": {
+    "name": "Vladimir Nabokov"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 55,
+  "fields": {
+    "name": "Stefan Zweig"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 56,
+  "fields": {
+    "name": "Haruki Murakami"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 57,
+  "fields": {
+    "name": "Terry Pratchett"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 58,
+  "fields": {
+    "name": "Plato"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 59,
+  "fields": {
+    "name": "C. S. Lewis"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 60,
+  "fields": {
+    "name": "Johannes Mario Simmel"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 61,
+  "fields": {
+    "name": "Anne Bronte"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 62,
+  "fields": {
+    "name": "Heinrich von Kleist"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 63,
+  "fields": {
+    "name": "Robert Musil"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 64,
+  "fields": {
+    "name": "Wolfgang Hohlbein"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 65,
+  "fields": {
+    "name": "Jos\u00e9 Saramago"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 66,
+  "fields": {
+    "name": "Siegfried Lenz"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 67,
+  "fields": {
+    "name": "G\u00fcnter Grass"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 68,
+  "fields": {
+    "name": "Ovid"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 69,
+  "fields": {
+    "name": "Frances Hodgson Burnett"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 70,
+  "fields": {
+    "name": "Howard Phillips Lovecraft"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 71,
+  "fields": {
+    "name": "Paul Auster"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 72,
+  "fields": {
+    "name": "Christa Wolf"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 73,
+  "fields": {
+    "name": "T. C. Boyle"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 74,
+  "fields": {
+    "name": "F. Scott Fitzgerald"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 75,
+  "fields": {
+    "name": "Honor\u00e9 de Balzac"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 76,
+  "fields": {
+    "name": "David Foster Wallace"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 77,
+  "fields": {
+    "name": "Philip Roth"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 78,
+  "fields": {
+    "name": "Emile Zola"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 79,
+  "fields": {
+    "name": "Jules Verne"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 80,
+  "fields": {
+    "name": "Marcus Tullius Cicero"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 81,
+  "fields": {
+    "name": "Thich Nhat Hanh"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 82,
+  "fields": {
+    "name": "Herman Melville"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 83,
+  "fields": {
+    "name": "Joseph von Eichendorff"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 84,
+  "fields": {
+    "name": "Virgil"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 85,
+  "fields": {
+    "name": "Franz Werfel"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 86,
+  "fields": {
+    "name": "Stendhal"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 87,
+  "fields": {
+    "name": "Dalai Lama (Tenzin Gyatso)"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 88,
+  "fields": {
+    "name": "Dante Alighieri"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 89,
+  "fields": {
+    "name": "Viktor E. Frankl"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 90,
+  "fields": {
+    "name": "Cormac McCarthy"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 91,
+  "fields": {
+    "name": "Heinrich Harrer"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 92,
+  "fields": {
+    "name": "Leo Perutz"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 93,
+  "fields": {
+    "name": "Philippe Djian"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 94,
+  "fields": {
+    "name": "Per Olov Enquist"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 95,
+  "fields": {
+    "name": "Neale Donald Walsch"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 96,
+  "fields": {
+    "name": "Lee Carroll"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 97,
+  "fields": {
+    "name": "Sibylle Berg"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 98,
+  "fields": {
+    "name": "Juli Zeh"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 99,
+  "fields": {
+    "name": "E. T. A. Hoffmann"
+  }
+},
+{
+  "model": "literature.author",
+  "pk": 100,
+  "fields": {
+    "name": "Samuel Beckett"
+  }
+}
+]
