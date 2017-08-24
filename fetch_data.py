@@ -8,7 +8,7 @@ django.setup()
 import requests
 from pyquery import PyQuery as pq
 
-from literature.models import Author
+from literature.models import Author, Book
 
 
 BASE_URL = 'https://www.lovelybooks.de'
@@ -28,9 +28,18 @@ def fetch_authors():
         yield (item.attrib['href'], item.getchildren()[0].text)
 
 
+def fetch_books(url):
+    d = fetch(url)
+    selector = d('.buchtitel a')
+    for item in selector:
+        yield item.text
+
+
 def main():
     for author_path, author_name in fetch_authors():
         author = Author.objects.create(name=author_name)
+        for book_title in fetch_books(BASE_URL + author_path):
+            Book.objects.create(author=author, title=book_title)
 
 
 if __name__ == "__main__":
