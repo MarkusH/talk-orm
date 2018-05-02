@@ -5,10 +5,11 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "talk.settings")
 django.setup()
 
+import random
 import requests
 from pyquery import PyQuery as pq
 
-from literature.models import Author, Book
+from literature.models import Author, AuthorBookThrough, Book
 
 
 BASE_URL = 'https://www.lovelybooks.de'
@@ -35,11 +36,27 @@ def fetch_books(url):
         yield item.text
 
 
+def populate_random_m2m_authors():
+    authors = list(Author.objects.all())
+    books = Book.objects.select_related('author')
+    for book in books:
+        AuthorBookThrough.objects.bulk_create(
+            [AuthorBookThrough(author=book.author, book=book)] +
+            [
+                AuthorBookThrough(author=a, book=book)
+                for a in random.choices(authors, k=random.randint(0, 4))
+                if a.id != book.author_id
+            ]
+        )
+
+
 def main():
     for author_path, author_name in fetch_authors():
         author = Author.objects.create(name=author_name)
         for book_title in fetch_books(BASE_URL + author_path):
             Book.objects.create(author=author, title=book_title)
+
+    populate_random_m2m_authors()
 
 
 if __name__ == "__main__":
