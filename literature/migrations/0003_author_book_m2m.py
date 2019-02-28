@@ -8,26 +8,47 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('literature', '0002_book'),
-    ]
+    dependencies = [("literature", "0002_book")]
 
     operations = [
         migrations.CreateModel(
-            name='AuthorBookThrough',
+            name="AuthorBookThrough",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='literature.Author')),
-                ('book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='literature.Book')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="literature.Author",
+                    ),
+                ),
+                (
+                    "book",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="literature.Book",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='book',
-            name='authors',
-            field=models.ManyToManyField(related_name='books_m2m', through='literature.AuthorBookThrough', to='literature.Author'),
+            model_name="book",
+            name="authors",
+            field=models.ManyToManyField(
+                related_name="books_m2m",
+                through="literature.AuthorBookThrough",
+                to="literature.Author",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='authorbookthrough',
-            unique_together=set([('author', 'book')]),
+            name="authorbookthrough", unique_together=set([("author", "book")])
         ),
     ]

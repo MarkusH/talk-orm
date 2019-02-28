@@ -1,0 +1,16 @@
+-r requirements.txt
+
+black==18.9b0
+pyquery==1.4.0 
+requests==2.21.0
+
+appdirs==1.4.3
+attrs==18.2.0
+certifi==2018.11.29
+chardet==3.0.4
+Click==7.0
+cssselect==1.0.3
+idna==2.8
+lxml==4.3.1
+toml==0.10.0
+urllib3==1.24.1
