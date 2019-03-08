@@ -7,7 +7,8 @@ This demo uses Python 3.7 and Django 2.1
 ```bash
 $ python3.7 -m venv .venv
 $ ./.venv/bin/pip install -r requirements.txt
-$ ./.venv/bin/python manage.py
+$ ./.venv/bin/python manage.py migrate
+$ ./.venv/bin/python manage.py loaddata goodreads
 ```
 
 ## Development
