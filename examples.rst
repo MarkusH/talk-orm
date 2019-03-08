@@ -5,9 +5,10 @@ Examples
 ..
 
     To run this file as ``doctest``, load the fixtures as stated in the
-    ``README.md``. With an activated virtualenv and all dependencies installed:
+    ``README.md``. With an activated virtualenv and all dependencies
+    installed::
 
-    $ python -m doctest -o NORMALIZE_WHITESPACE -o ELLIPSIS -o IGNORE_EXCEPTION_DETAIL examples.rst
+        $ python -m doctest -o NORMALIZE_WHITESPACE -o ELLIPSIS -o IGNORE_EXCEPTION_DETAIL examples.rst
 
 
 Setup
@@ -27,8 +28,8 @@ Django and configure it:
 Counting objects
 ================
 
-Let's start of with something basic. We'll count how many records we have in
-the database:
+Let's start with something basic. We'll count how many records we have in the
+database:
 
 .. code:: python
 
@@ -57,11 +58,11 @@ Great, let's fetch some random author from the database:
         (self.model._meta.object_name, num)
     literature.models.Author.MultipleObjectsReturned: get() returned more than one Author -- it returned 1142!
 
-Well, that clearly didn't go as planned. We got an exception that multiple
+Well, that obviously didn't go as planned. We got an exception that multiple
 objects got returned. That's what ``get()`` is all about. It returns
 **exactly** one object. Not zero, not two or more. One!
 
-Alternativly, we could use ``first()``:
+Alternatively, we could use ``first()``:
 
 .. code:: python
 
@@ -69,7 +70,7 @@ Alternativly, we could use ``first()``:
     <Author: Bill Bryson>
 
 The difference here, ``first()`` may return ``None`` in case there is no record
-to return. We can see that when we try to select myself as an author:
+to return. We can see that when we try to select me as an author:
 
 .. code:: python
 
@@ -87,9 +88,9 @@ exception.
 Advanced filtering
 ==================
 
-We've just see how we can filter on the exact value of a model field when
+We've just seen how we can filter on the exact value of a model field when
 querying the database. But there's more. For example, we can select all authors
-whos name stars with ``"Lisa"``:
+whose name stars with ``"Lisa"``:
 
 .. code:: python
 
@@ -97,7 +98,7 @@ whos name stars with ``"Lisa"``:
     <QuerySet [<Author: Lisa Unger>, <Author: Lisa Scottoline>, ...]>
 
 Similarly, when we don't care about upper and lower case and only care if the
-character sequence is part of record, we can use ``__icontains``:
+character sequence is part of a record, we can use ``__icontains``:
 
 .. code:: python
 
@@ -121,15 +122,15 @@ The first approach we will make may very well look like this:
 That works, we end up with *a lot* of database queries. Specifically, we end up
 with ``1 + $number_of_books`` queries. Why is that?
 
-First, we're selecting all books. That's one query. Then, in the for loop, we
-make *one query per book*. In case you're wondering: that is *bad*!.
+First, we're selecting all the books. That's one query. Then, in the for loop,
+we make *one query per book*. In case you're wondering: that is *bad*!.
 
 Excourse: Inspecting database queries
 -------------------------------------
 
-When you're developing your Django project or app, it can be helpful to quickly
-check the recent database queries. For that, Django tracks them on the database
-connection:
+When you're developing your Django project or app, it can be helpful to check
+the recent database queries quickly. For that, Django tracks them on the
+database connection:
 
 .. code:: python
 
@@ -157,9 +158,9 @@ Now we have 1 query only. Exactly what we wanted.
 
 I wrote above that ``select_related()`` is for *forward relationships*. That
 means, it only ever works when on the other end of the relationships is at most
-one object. "At most", because that related object could also be ``None``, e.g.
-when you have a ``ForeignKey`` with ``null=True``. In other words, you can use
-``select_related()`` when the current model has a ``ForeignKey`` or
+one object. "At most," because that related object could also be ``None``,
+e.g., when you have a ``ForeignKey`` with ``null=True``. In other words, you
+can use ``select_related()`` when the current model has a ``ForeignKey`` or
 ``OneToOneField``, or if the current model is the opposite end of an
 ``OneToOneField``. It will **not** work for ``ManyToManyFields`` or the reverse
 of a ``ForeignKey``.
@@ -170,10 +171,10 @@ Following `one-to-many` and `many-to-many` relationships
 When there are `one-to-one` and `many-to-one` relationships, there probably are
 `one-to-many` and `many-to-many` as well. And indeed, there are. You use them
 when you have ``ManyToManyFields`` or when you follow a ``ForeignKey``
-backwards.
+backward.
 
-Given our database schema, we have that scenario when we want to list all books
-for each author. The naïve approach will look a bit like this:
+Given our database schema, we have that scenario when we want to list all the
+books for each author. The naïve approach will look a bit like this:
 
 .. code:: python
 
@@ -186,7 +187,8 @@ for each author. The naïve approach will look a bit like this:
 
 As you might imagine, this has similar problems as the example I had above. We
 now have ``1 + $number_of_authors`` queries: 1 for the list of authors, and one
-for each author to get the books. This can be optimized to exactly 2 queries:
+for each author to get the books. We can optimize this can to exactly two
+database queries:
 
 .. code:: python
 
@@ -207,7 +209,7 @@ equals to:
 The filter on ``author_id`` will automatically be populated by Django and limit
 the books to the set of authors selected in the first query.
 
-If you want to further limit the books queryset, you can do so using
+If you want to limit the books queryset further, you can do so using
 ``Prefetch`` objects::
 
     >>> from django.db.models import Prefetch
@@ -223,13 +225,12 @@ Aggregating data
 All the things above are somewhat basic and something everybody using Django
 will come across eventually. The next topic about data aggregation and
 annotating database objects with additional information is something that's
-still common, but it may take some time for this to actually come up in a
-project.
+still common, but it may take some time for this to come up in a project.
 
 Let's ``COUNT`` again
 ---------------------
 
-Let's start off by counting the number of books per author:
+Let's start by counting the number of books per author:
 
 .. code:: python
 
@@ -249,7 +250,7 @@ We get a list that looks a bit like this::
     Author: Jesmyn Ward: 1
     Author: Victor LaValle: 2
 
-And at this point it's interesting to start to look at the SQL Django
+And at this point, it's interesting to start to look at the SQL Django
 generated:
 
 .. code:: sql
@@ -264,9 +265,10 @@ generated:
     GROUP BY
         "literature_author"."id", "literature_author"."name"
 
-The key puzzle piece in this SQL statement is the ``JOIN`` between the author
-and book tables with the ``COUNT`` in the ``SELECT`` clause. Django shifts the
-entire work to calculate the sum of books per author to the database.
+The critical puzzle piece in this SQL statement is the ``JOIN`` between the
+author and book tables with the ``COUNT`` in the ``SELECT`` clause. Django
+shifts the entire work to calculate the sum of books per author to the
+database.
 
 Let's ``SUM`` it up
 -------------------
@@ -313,11 +315,11 @@ more:
     ... ).order_by("-book_count")
     <QuerySet [<Author: Stephen King>, <Author: Peter     Meredith>, ...']>
 
-This will count the books per author, but will also attach the "first name" to
-each model instance.
+This query will count the books per author, but will also attach the "first
+name" to each model instance.
 
 If we add the ``values()`` queryset method after the first ``annotate()``
-method we effectively group on the counting by first name:
+method we effectively group on the counting by the first name:
 
 .. code:: python
 
@@ -331,9 +333,9 @@ method we effectively group on the counting by first name:
     <QuerySet [{'first_name': 'Lisa', 'book_count': 56}, {'first_name': 'David', 'book_count': 53}, ...]>
 
 I'm well aware that this is a lot to digest and understand. The Django
-documentation has a `whole chapter on aggrgations`_ that I can highly recommend
-to read through and have a look at whenever you need to deal with aggregations
-and annotations, because I haven't even covered half of it.
+documentation has a `whole chapter on aggregations`_ that I can highly
+recommend to read through and have a look at whenever you need to deal with
+aggregations and annotations, because I haven't even covered half of it.
 
 Top-k selects
 =============
@@ -342,11 +344,12 @@ The last thing I want to cover is something that's generally not easy to
 express in SQL and also computational wise rather heavy. It's about selecting
 the *top-k* elements for something else.
 
-The common approach to this problem, across all databases, is the use of
-*subqueries*. A subquery is a full SQL query that is run as part of a "main"
-query.
+The typical approach to this problem, across all databases, is the use of
+*subqueries*. A subquery is a full SQL query that will run as part of a "main"
+database query.
 
-Let's start off by first selecting the top three books by number of votes per
+
+Let's start by first selecting the top three books by the number of votes per
 author, and then the top three books by votes per genre.
 
 Top three by author
@@ -384,14 +387,14 @@ However, this will cause Django to raise an exception:
 
     Cannot filter a query once a slice has been taken.
 
-If one things about that, Django will take the ``book_qs`` and apply a
+If one thinks about that, Django will take the ``book_qs`` and apply a
 ``filter()`` call on the ``author_id`` to limit the books to the list of
-authors selected before. So, we need another approach. There's actually a
+authors selected before. So, we need another approach. There's already a
 `feature request ticket`_ on the Django bug tracker.
 
 Instead, we need to look into ``Subquery`` and ``OuterRef``.
 
-First we'll select the primary key of the top *k* books while filtering on an
+First, we'll select the primary key of the top *k* books while filtering on an
 *outer reference* to a ``author_id``. This queryset will not work on its own.
 It will only ever work in the context of a subquery that knows about a
 ``author_id``.
@@ -453,12 +456,12 @@ and books:
 Top three by genre
 ------------------
 
-We can use the very same pattern we have above for top-k by author when we want
-to select the top-k by genre.
+We can use the very same pattern we have above for top-k by an author when we
+want to select the top-k by genre.
 
-The key difference between the Book-Author and Book-Genre relationship is that
-one of them is a many-to-one (Book-Author) and the other one is many-to-many
-(Book-Genre).
+The notable difference between the Book-Author and Book-Genre relationship is
+that one of them is a many-to-one (Book-Author) and the other one is
+many-to-many (Book-Genre).
 
 Due to the relationship being a many-to-many one, we need to make one change
 to remove duplicate books: the ``book_qs`` gains a ``distinct()`` call.
@@ -508,5 +511,5 @@ to remove duplicate books: the ``book_qs`` gains a ``distinct()`` call.
     ORDER BY
         "literature_book"."votes" DESC
 
-.. _whole chapter on aggrgations: https://docs.djangoproject.com/en/2.1/topics/db/aggregation/
+.. _whole chapter on aggregations: https://docs.djangoproject.com/en/2.1/topics/db/aggregation/
 .. _feature request ticket: https://code.djangoproject.com/ticket/26780
