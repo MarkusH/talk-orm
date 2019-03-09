@@ -451,7 +451,6 @@ and books:
             LIMIT 3
         )
         AND "literature_book"."author_id" IN (7, 16, 25, 40, ..., 18885860)
-    )
     ORDER BY
         "literature_book"."votes" DESC
 
@@ -509,7 +508,6 @@ to remove duplicate books: the ``book_qs`` gains a ``distinct()`` call.
             LIMIT 3
         )
         AND T4."genre_id" IN (1, 2, ..., 411, 412)
-    )
     ORDER BY
         "literature_book"."votes" DESC
 
