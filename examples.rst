@@ -210,7 +210,9 @@ The filter on ``author_id`` will automatically be populated by Django and limit
 the books to the set of authors selected in the first query.
 
 If you want to limit the books queryset further, you can do so using
-``Prefetch`` objects::
+``Prefetch`` objects:
+
+.. code:: python
 
     >>> from django.db.models import Prefetch
 
