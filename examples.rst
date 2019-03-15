@@ -168,7 +168,7 @@ of a ``ForeignKey``.
 Following `one-to-many` and `many-to-many` relationships
 --------------------------------------------------------
 
-When there are `one-to-one` and `many-to-one` relationships, 1{e
+When there are `one-to-one` and `many-to-one` relationships, there are probably
 `one-to-many` and `many-to-many` as well. And indeed, there are. You use them
 when you have ``ManyToManyFields`` or when you follow a ``ForeignKey``
 backward.
