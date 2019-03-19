@@ -90,7 +90,7 @@ Advanced filtering
 
 We've just seen how we can filter on the exact value of a model field when
 querying the database. But there's more. For example, we can select all authors
-whose name stars with ``"Lisa"``:
+whose name starts with ``"Lisa"``:
 
 .. code:: python
 
@@ -123,10 +123,10 @@ That works, we end up with *a lot* of database queries. Specifically, we end up
 with ``1 + $number_of_books`` queries. Why is that?
 
 First, we're selecting all the books. That's one query. Then, in the for loop,
-we make *one query per book*. In case you're wondering: that is *bad*!.
+we make *one query per book*. In case you're wondering: that is *bad*!
 
-Excourse: Inspecting database queries
--------------------------------------
+Sidebar: Inspecting database queries
+------------------------------------
 
 When you're developing your Django project or app, it can be helpful to check
 the recent database queries quickly. For that, Django tracks them on the
@@ -154,12 +154,12 @@ that: ``select_related()``. This queryset method tells Django to fetch
     ...     print(f"Title: {book.title} -- Author: {book.author.name}")
     Title: ...
 
-Now we have 1 query only. Exactly what we wanted.
+Now we have only 1 query. Exactly what we wanted.
 
 I wrote above that ``select_related()`` is for *forward relationships*. That
 means, it only ever works when on the other end of the relationships is at most
 one object. "At most," because that related object could also be ``None``,
-e.g., when you have a ``ForeignKey`` with ``null=True``. In other words, you
+e.g. when you have a ``ForeignKey`` with ``null=True``. In other words, you
 can use ``select_related()`` when the current model has a ``ForeignKey`` or
 ``OneToOneField``, or if the current model is the opposite end of an
 ``OneToOneField``. It will **not** work for ``ManyToManyFields`` or the reverse
@@ -168,7 +168,7 @@ of a ``ForeignKey``.
 Following `one-to-many` and `many-to-many` relationships
 --------------------------------------------------------
 
-When there are `one-to-one` and `many-to-one` relationships, there probably are
+When there are `one-to-one` and `many-to-one` relationships, there are probably
 `one-to-many` and `many-to-many` as well. And indeed, there are. You use them
 when you have ``ManyToManyFields`` or when you follow a ``ForeignKey``
 backward.
@@ -186,13 +186,13 @@ books for each author. The naïve approach will look a bit like this:
     Author: ...
 
 As you might imagine, this has similar problems as the example I had above. We
-now have ``1 + $number_of_authors`` queries: 1 for the list of authors, and one
+now have ``1 + $number_of_authors`` queries: one for the list of authors, and one
 for each author to get the books. We can optimize this can to exactly two
 database queries:
 
 .. code:: python
 
-    >>> authors = Author.objects.prefetch_related("books").all()
+    >>> authors = Author.objects.prefetch_related("books")
     >>> for author in authors:
     ...     print(f"Author: {author.name}")
     ...     for book in author.books.all():
@@ -204,7 +204,7 @@ equals to:
 
 .. code:: python
 
-    >>> books = Book.object.filter(author_id__in=...).all()
+    >>> books = Book.object.filter(author_id__in=...)
 
 The filter on ``author_id`` will automatically be populated by Django and limit
 the books to the set of authors selected in the first query.
@@ -219,7 +219,7 @@ If you want to limit the books queryset further, you can do so using
     >>> prefetch_qs = Book.objects.filter(title__startswith="H")
     >>> authors = Author.objects.prefetch_related(
     ...     Prefetch("books", queryset=prefetch_qs)
-    ... ).all()
+    ... )
 
 Aggregating data
 ================
@@ -243,7 +243,7 @@ Let's start by counting the number of books per author:
     ...     print(f"Author: {author.name}: {author.book_count}")
     Author: ...
 
-We get a list that looks a bit like this::
+We get a list that looks like this::
 
     Author: Jen Wang: 10
     Author: Sarah MacLean: 12
@@ -349,7 +349,6 @@ the *top-k* elements for something else.
 The typical approach to this problem, across all databases, is the use of
 *subqueries*. A subquery is a full SQL query that will run as part of a "main"
 database query.
-
 
 Let's start by first selecting the top three books by the number of votes per
 author, and then the top three books by votes per genre.
@@ -465,7 +464,7 @@ that one of them is a many-to-one (Book-Author) and the other one is
 many-to-many (Book-Genre).
 
 Due to the relationship being a many-to-many one, we need to make one change
-to remove duplicate books: the ``book_qs`` gains a ``distinct()`` call.
+to remove duplicate books — the ``book_qs`` gains a ``distinct()`` call.
 
 .. code:: python
 
