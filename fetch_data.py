@@ -11,7 +11,7 @@ from pyquery import PyQuery as pq
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "talk.settings")
 django.setup()
 
-from literature.models import Author, AuthorBookThrough, Book, Genre
+from literature.models import Author, Book, Genre
 
 BASE_URL = "https://www.goodreads.com"
 URLS = (
@@ -105,28 +105,11 @@ def fetch_books(page: pq):
         fetch_book(book_id, book_page, follow_author=True)
 
 
-def populate_random_m2m_authors():
-    authors = list(Author.objects.all())
-    books = Book.objects.select_related("author")
-    for book in books:
-        bulks = [AuthorBookThrough(author=book.author, book=book)]
-        bulks.extend(
-            [
-                AuthorBookThrough(author=a, book=book)
-                for a in random.choices(authors, k=random.randint(0, 4))
-                if a.id != book.author_id
-            ]
-        )
-        AuthorBookThrough.objects.bulk_create(bulks)
-
-
 def main():
     for url in URLS:
         print(f"> Fetching book list {url}")
         page = fetch(url)
         fetch_books(page)
-
-    # populate_random_m2m_authors()
 
 
 if __name__ == "__main__":
