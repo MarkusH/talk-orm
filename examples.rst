@@ -2,7 +2,7 @@
 Examples
 ========
 
-..
+.. admonition:: INFO
 
     To run this file as ``doctest``, load the fixtures as stated in the
     ``README.md``. With an activated virtualenv and all dependencies
@@ -41,6 +41,12 @@ database:
     3578
     >>> Genre.objects.count()
     412
+
+We access the attribute ``objects`` on a database model class. ``objects`` is a
+"Model Manager". Django uses them to connect database model classes and
+``QuerySet``\s. We then access the ``count()`` method on a manager which uses
+the underlying, auto-generated queryset to create the SQL that returns the
+number of records for that model.
 
 Fetching single objects
 =======================
@@ -105,6 +111,8 @@ character sequence is part of a record, we can use ``__icontains``:
     >>> Author.objects.filter(name__icontains="tom")
     <QuerySet [<Author: Robert Tombs>, <Author: Tom Barbash>, <Author: Tom Sweterlitsch>, ...]>
 
+All these `Field Lookups`_ are fully documented.
+
 Following related objects
 =========================
 
@@ -118,12 +126,13 @@ The first approach we will make may very well look like this:
     ...     print(f"Title: {book.title} -- Author: {book.author.name}")
     Title: ...
 
-
 That works, we end up with *a lot* of database queries. Specifically, we end up
 with ``1 + $number_of_books`` queries. Why is that?
 
 First, we're selecting all the books. That's one query. Then, in the for loop,
-we make *one query per book*. In case you're wondering: that is *bad*!
+we make *one query per book*. In case you're wondering: that is *bad*! It may
+be "just fine" for two to five books, but when you have more, you *will* end up
+with performance problems.
 
 Sidebar: Inspecting database queries
 ------------------------------------
@@ -157,13 +166,13 @@ that: ``select_related()``. This queryset method tells Django to fetch
 Now we have only 1 query. Exactly what we wanted.
 
 I wrote above that ``select_related()`` is for *forward relationships*. That
-means, it only ever works when on the other end of the relationships is at most
-one object. "At most," because that related object could also be ``None``,
-e.g. when you have a ``ForeignKey`` with ``null=True``. In other words, you
-can use ``select_related()`` when the current model has a ``ForeignKey`` or
-``OneToOneField``, or if the current model is the opposite end of an
-``OneToOneField``. It will **not** work for ``ManyToManyFields`` or the reverse
-of a ``ForeignKey``.
+means, it only ever works when there is at most one object on the other end of
+the relationships. "At most," because that related object could also be
+``None``, e.g. when you have a ``ForeignKey`` with ``null=True``. In other
+words, you can use ``select_related()`` when the current model has a
+``ForeignKey`` or ``OneToOneField``, or if the current model is the opposite
+end of an ``OneToOneField``. It will **not** work for ``ManyToManyFields`` or
+the reverse of a ``ForeignKey``.
 
 Following `one-to-many` and `many-to-many` relationships
 --------------------------------------------------------
@@ -182,12 +191,12 @@ books for each author. The naïve approach will look a bit like this:
     >>> for author in authors:
     ...     print(f"Author: {author.name}")
     ...     for book in author.books.all():
-    ...         print(f"  - title: {book.title}")
+    ...         print(f"  - Title: {book.title}")
     Author: ...
 
 As you might imagine, this has similar problems as the example I had above. We
-now have ``1 + $number_of_authors`` queries: one for the list of authors, and one
-for each author to get the books. We can optimize this can to exactly two
+now have ``1 + $number_of_authors`` queries: one for the list of authors, and
+one for each author to get the books. We can optimize this to exactly two
 database queries:
 
 .. code:: python
@@ -204,7 +213,7 @@ equals to:
 
 .. code:: python
 
-    >>> books = Book.object.filter(author_id__in=...)
+    books = Book.objects.filter(author_id__in=...)
 
 The filter on ``author_id`` will automatically be populated by Django and limit
 the books to the set of authors selected in the first query.
@@ -293,6 +302,25 @@ authors with the most votes across all books:
     Author: John Green: 5694398 votes
     Author: Stephen King: 5181285 votes
 
+Instead of a simple count, we sum up all the votes for all books an author has
+written. We then sort the authors by the sum of votes in decreasing order and
+limit the amount of records returned from the database to five.
+
+.. code:: sql
+
+    SELECT
+        "literature_author"."id",
+        "literature_author"."name",
+        SUM("literature_book"."votes") AS "sum_votes"
+    FROM "literature_author"
+    LEFT OUTER JOIN "literature_book"
+        ON "literature_author"."id" = "literature_book"."author_id"
+    GROUP BY
+        "literature_author"."id",
+        "literature_author"."name"
+    ORDER BY "sum_votes" DESC
+    LIMIT 5
+
 Annotating "arbitrary" data
 ---------------------------
 
@@ -315,13 +343,13 @@ more:
     ... ).annotate(
     ...     book_count=Count("books")
     ... ).order_by("-book_count")
-    <QuerySet [<Author: Stephen King>, <Author: Peter     Meredith>, ...']>
+    <QuerySet [<Author: Stephen King>, <Author: Peter     Meredith>, ...]>
 
 This query will count the books per author, but will also attach the "first
 name" to each model instance.
 
-If we add the ``values()`` queryset method after the first ``annotate()``
-method we effectively group on the counting by the first name:
+If we add a ``values()`` queryset method after the first ``annotate()`` method
+we effectively group on the first name for the counting:
 
 .. code:: python
 
@@ -348,7 +376,9 @@ the *top-k* elements for something else.
 
 The typical approach to this problem, across all databases, is the use of
 *subqueries*. A subquery is a full SQL query that will run as part of a "main"
-database query.
+database query. Some database have additional capabilities, though, that make
+*top-k* selection relatively easy. On PostgreSQL, that would be a `LATERAL
+JOIN`_.
 
 Let's start by first selecting the top three books by the number of votes per
 author, and then the top three books by votes per genre.
@@ -384,9 +414,18 @@ takes will be this:
 
     >>> books_qs = Book.objects.order_by("-votes")[:3]
 
-However, this will cause Django to raise an exception:
+However, this will cause Django to raise an ``AssertionError``:
 
-    Cannot filter a query once a slice has been taken.
+.. code:: python
+
+    >>> list(
+    ...     Author.objects.prefetch_related(
+    ...         Prefetch("books", queryset=books_qs)
+    ...     )
+    ... )
+    Traceback (most recent call last):
+    ...
+    AssertionError: Cannot filter a query once a slice has been taken.
 
 If one thinks about that, Django will take the ``book_qs`` and apply a
 ``filter()`` call on the ``author_id`` to limit the books to the list of
@@ -396,8 +435,8 @@ authors selected before. So, we need another approach. There's already a
 Instead, we need to look into ``Subquery`` and ``OuterRef``.
 
 First, we'll select the primary key of the top *k* books while filtering on an
-*outer reference* to a ``author_id``. This queryset will not work on its own.
-It will only ever work in the context of a subquery that knows about a
+*outer reference* to an ``author_id``. This queryset will not work on its own.
+It will only ever work in the context of a subquery that knows about an
 ``author_id``.
 
 We then put that ``book_sub_qs`` into a subquery. With that, the inner query
@@ -490,7 +529,7 @@ to remove duplicate books — the ``book_qs`` gains a ``distinct()`` call.
         "literature_book"."votes"
     FROM "literature_book"
     INNER JOIN "literature_book_genres"
-        ON  "literature_book"."id" = "literature_book_genres"."book_id"
+        ON "literature_book"."id" = "literature_book_genres"."book_id"
     INNER JOIN "literature_book_genres" T4
         ON "literature_book"."id" = T4."book_id"
     WHERE
@@ -510,5 +549,7 @@ to remove duplicate books — the ``book_qs`` gains a ``distinct()`` call.
     ORDER BY
         "literature_book"."votes" DESC
 
+.. _Field Lookups: https://docs.djangoproject.com/en/2.1/ref/models/querysets/#field-lookups
 .. _whole chapter on aggregations: https://docs.djangoproject.com/en/2.1/topics/db/aggregation/
+.. _LATERAL JOIN: https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-LATERAL
 .. _feature request ticket: https://code.djangoproject.com/ticket/26780
