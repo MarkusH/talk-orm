@@ -272,9 +272,10 @@ generated:
         COUNT("literature_book"."id") AS "book_count"
     FROM "literature_author"
     LEFT OUTER JOIN "literature_book"
-        ON ("literature_author"."id" = "literature_book"."author_id")
+        ON "literature_author"."id" = "literature_book"."author_id"
     GROUP BY
-        "literature_author"."id", "literature_author"."name"
+        "literature_author"."id",
+        "literature_author"."name"
 
 The critical puzzle piece in this SQL statement is the ``JOIN`` between the
 author and book tables with the ``COUNT`` in the ``SELECT`` clause. Django
@@ -305,6 +306,10 @@ authors with the most votes across all books:
 Instead of a simple count, we sum up all the votes for all books an author has
 written. We then sort the authors by the sum of votes in decreasing order and
 limit the amount of records returned from the database to five.
+
+The SQL for this query is not too different to the previous one. Instead of
+``COUNT`` there is a ``SUM`` function. There is now a ``ORDER BY`` column with
+a ``LIMIT``. All as expected.
 
 .. code:: sql
 
