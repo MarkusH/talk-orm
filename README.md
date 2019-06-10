@@ -1,6 +1,6 @@
 # talk-orm
 
-This demo uses Python 3.7 and Django 2.1
+This demo uses Python 3.7 and Django 2.2
 
 ## Setup
 
