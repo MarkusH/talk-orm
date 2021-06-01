@@ -13,4 +13,4 @@ cssselect==1.0.3
 idna==2.8
 lxml==4.6.3
 toml==0.10.0
-urllib3==1.25.8
+urllib3==1.26.5
